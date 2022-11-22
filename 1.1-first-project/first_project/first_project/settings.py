@@ -1,5 +1,5 @@
 import os
-# from first_project.local_config import PASSWORD
+from first_project.local_config import PASSWORD
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,7 +70,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'jangodb',
         'USER': 'postgres',
-        'PASSWORD': 'YlkaVaray2010!',
+        'PASSWORD': PASSWORD,
         'PORT': '5432'
     }
 }
