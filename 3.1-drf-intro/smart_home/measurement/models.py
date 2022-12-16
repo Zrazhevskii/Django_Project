@@ -4,18 +4,27 @@ from django.db import models
 # TODO: опишите модели датчика (Sensor) и измерения (Measurement)
 
 class Sensor(models.Model):
-    name = models.CharField(max_length=80)
-    description = models.CharField(max_length=250)
+    name = models.CharField(max_length=80, verbose_name='Датчик')
+    description = models.CharField(max_length=250, verbose_name='Описание')
+
+    # mease = m
+    class Meta:
+        verbose_name = 'Датчик'
+        verbose_name_plural = 'Датчики'
 
     def __str__(self):
         return self.name
 
 
 class Measurement(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
-    measuring_temp = models.DecimalField(max_digits=5, decimal_places=2)
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, verbose_name='Датчик')
+    measuring_temp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Измерение')
     time_of_measurement = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        verbose_name = 'Измерение'
+        verbose_name_plural = 'Измерения'
+
+    # def __str__(self):
+    #     return self.measuring_temp
 
