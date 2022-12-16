@@ -7,7 +7,6 @@ class Sensor(models.Model):
     name = models.CharField(max_length=80, verbose_name='Датчик')
     description = models.CharField(max_length=250, verbose_name='Описание')
 
-    # mease = m
     class Meta:
         verbose_name = 'Датчик'
         verbose_name_plural = 'Датчики'
@@ -24,7 +23,3 @@ class Measurement(models.Model):
     class Meta:
         verbose_name = 'Измерение'
         verbose_name_plural = 'Измерения'
-
-    # def __str__(self):
-    #     return self.measuring_temp
-
