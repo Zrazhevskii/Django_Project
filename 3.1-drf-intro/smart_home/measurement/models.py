@@ -11,15 +11,17 @@ class Sensor(models.Model):
         verbose_name = 'Датчик'
         verbose_name_plural = 'Датчики'
 
+
     def __str__(self):
         return self.name
 
 
 class Measurement(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, verbose_name='Датчик', related_name='measurements')
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, verbose_name='Датчик', related_name='measurements', blank=True)
     measuring_temp = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Измерение')
     time_of_measurement = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Измерение'
         verbose_name_plural = 'Измерения'
+        ordering = ['-time_of_measurement']
