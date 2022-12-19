@@ -1,8 +1,8 @@
 # TODO: опишите необходимые обработчики, рекомендуется использовать generics APIView классы:
 # TODO: ListCreateAPIView, RetrieveUpdateAPIView, CreateAPIView
 from django.http import HttpResponse
-from django.shortcuts import render
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView, \
+    ListCreateAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,9 +14,9 @@ def home(request):
     return HttpResponse('<h1>Супер клевый сайт...  в будущем</h1>')
 
 
-class SensorAPIView(APIView):
-    """ Получение данных по датчикам """
+""" Получение данных по датчикам """
 
+class SensorView(APIView):
     def get(self, request):
         s = Sensor.objects.all()
         return Response({'sensors': SensorSerializer(s, many=True).data})
@@ -32,25 +32,19 @@ class SensorAPIView(APIView):
     """ Изменение данных датчиков """
 
 
-class SensorIdView(RetrieveUpdateAPIView):
+class SensorUpload(RetrieveUpdateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
-    """Добавить измерение. Указываются ID датчика и температура"""
+    """Обновить измерение датчику. Указываются ID датчика и температура."""
 
-
-class MeasurementAPIView(ListAPIView):
+class MeasurementView(UpdateAPIView):
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
 
-    def post(self, request):
-        serializer = MeasurementSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-
-        return Response({'measurement': serializer.data})
-
-
+''' Получить информацию по конкретному датчику. 
+    Выдается полная информация по датчику: 
+    ID, название, описание и список всех измерений с температурой и временем.'''
 class SensorDetail(RetrieveAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorDetailSerializer
