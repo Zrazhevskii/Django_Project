@@ -36,15 +36,24 @@ class SensorUpload(RetrieveUpdateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
-    """Обновить измерение датчику. Указываются ID датчика и температура."""
 
-class MeasurementView(UpdateAPIView):
-    queryset = Measurement.objects.all()
-    serializer_class = MeasurementSerializer
+    ''' Просмотр всех измерений '''
+class MeasurementView(APIView):
+    def get(self, request):
+        s = Measurement.objects.all()
+        return Response({'measurements': MeasurementSerializer(s, many=True).data})
+
+    """Добовляем измерение датчику. Указываются ID датчика и температура."""
+    def post(self, request):
+        serializer = MeasurementSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response({'measurement': serializer.data})
 
 ''' Получить информацию по конкретному датчику. 
     Выдается полная информация по датчику: 
     ID, название, описание и список всех измерений с температурой и временем.'''
+
 class SensorDetail(RetrieveAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorDetailSerializer
