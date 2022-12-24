@@ -26,5 +26,4 @@ class StockViewSet(viewsets.ModelViewSet):
     # при необходимости добавьте параметры фильтрации
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['address', 'products', 'positions']
-
-    # search_fields = ['products__title', 'positions__products__title']
+    # search_fields = ['positions__product__title']
