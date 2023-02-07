@@ -135,10 +135,12 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_FILTERS_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
